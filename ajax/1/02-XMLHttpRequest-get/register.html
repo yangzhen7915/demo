@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./form.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="./register.php" method="post">     
+        <span id="msg">aaa</span>  
+        用户名：<input type="text"  id="username"><span></span>
+        昵称：<input type="text" name="nickname" >
+        密码： <input type="password" name="password" >   
+        <input type="submit" value="注册">
+    </form>
+    
+    <script>
+        document.querySelector("#username").onblur = function(){
+            // 1.获取用户数据
+            var name = this.value;
+
+            var xhr = new XMLHttpRequest();
+         
+            xhr.open("get","validate.php?username="+name);
+           
+            xhr.send(null);
+
+            // 一个真正成功的响应应该两个方面：1.服务器成功响应  2.数据已经回到客户端并且可以使用了
+            // 监听异步对象的响应状态 readyState
+            // 0:创建了异步对象，但是还没有真正的去发送请求
+            // 1.调用了send方法，正在发送请求
+            // 2.send方法执行完毕了，已经收到服务器的响应内容--原始内容，还不可以使用
+            // 3.正在解析数据
+            // 4.响应内容解析完毕，可以使用了
+            xhr.onreadystatechange = function(){
+                
+                if(xhr.status == 200 && xhr.readyState == 4){
+                    console.log(xhr.responseText);
+                    console.log("-----------");
+                    document.querySelector(".showmsg").innerHTML = xhr.responseText;;
+                }
+            }
+        };
+    </script>
+</body>
+</html>

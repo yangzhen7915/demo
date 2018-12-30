@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <h2>京东商城</h2>
+<ul>
+    
+</ul>
+<script>
+   
+    var xhr = new XMLHttpRequest();
+    
+    xhr.open("get","./server/nav-json.php");
+
+    xhr.send();
+
+    xhr.onreadystatechange = function(){
+        if(xhr.status == 200 && xhr.readyState == 4){
+            var result = xhr.responseText;
+            // 在js中通过JSON.parse方法将json格式的字符串转换为js数组或者对象(
+                // 如果文件以[]来描述数据，那么就转换为数组
+                // 如果文件以{}来描述数据，那么就转换为对象)
+            // 和php中的json_decode方法的功能大致一样
+            var data = JSON.parse(result);
+            console.log(data);
+            console.log(typeof data);
+            var html = "";
+            for(var i=0;i<data.length;i++){
+                html += "<li>";
+                html +='<a href="#">';
+                html += '<img src="'+data[i].src+'" alt="">';
+                html += '<p>'+data[i].text+'</p>';
+                html += '</a>';
+                html += '</li>';
+            }
+            console.log(html);
+            // 将生成的页面结构添加到dom元素中
+            document.querySelector("ul").innerHTML = html;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="form.css">
+</head>
+<body>
+	<form action="">
+		name: <input type="text" name="name" id="uname"><span id="info"></span>
+		pwd: <input type="password" name="" id="">
+	</form>
+	<script>
+		document.getElementById('uname').onblur = function(){
+			var name = this.value; 
+			var xhr = new XMLHttpRequest()
+			xhr.open('post','./dome02.php');
+
+			xhr.setRequestHeader('Contnt-Type','applocation/x-www-form-urlencode');
+			xhr.send('name='+name);
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4&&xhr.status ==200){
+					var res = xhr.responseText;
+					var info = document.getElementById('info');
+					info.innerHTML = res;
+				}
+			}
+		}
+	</script>
+</body>
+</html>
